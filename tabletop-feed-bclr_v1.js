@@ -257,7 +257,17 @@ function checkHash() {
 			$('#volume').val(latest);
 			history.pushState("", document.title, "#issue/"+latest);
 			checkHash();
-		}	
+		}
+		else if (type == "E.-Supp.") {
+			var latestText = $('#volume option:contains(E.Supp.)').first().text();
+			if (latestText.includes('E.Supp.')) { //Make sure this is the E.Supp.
+					var latest = $('#volume option:contains(E.Supp.)').first().val();
+					$('#volume').val(latest);
+					history.pushState("", document.title, "#issue/"+latest);
+					checkHash();
+				}
+		}
+		
 		else {//Show generic view - most recent items
 			table
 				.search("");
@@ -490,6 +500,11 @@ function writeTable(data) {
 	$('.subjects .recent, #search-all').unbind().click(function(){ //All button
 		$('#volume').val('default');
 		history.pushState("", document.title, "#recent/");
+		checkHash();
+	});
+	$('.subjects .bclrOnline').unbind().click(function(){ //E. Supp. button
+		$('#volume').val('default');
+		history.pushState("", document.title, "#recent/E.-Supp.");
 		checkHash();
 	});
 	$('.subjects .latest').unbind().click(function(){ //Latest issue button
